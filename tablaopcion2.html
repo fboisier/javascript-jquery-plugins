@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jquery Plugins</title>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+
+    <!-- Pluging de Tooltip -->
+    <script type="text/javascript" src="js/tipped.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/tipped.css" />
+
+    <!-- DataTables Pluging Jquery-->
+
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.22/b-1.6.5/b-html5-1.6.5/r-2.2.6/datatables.min.css" />
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript"
+        src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.22/b-1.6.5/b-html5-1.6.5/r-2.2.6/datatables.min.js"></script>
+
+
+    <!-- SPOILER -->
+    <script src="js/spoiler.min.js"></script>
+
+    <!-- GRAFICOS! -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+    <style>
+        .table-sm td,
+        .table-sm th {
+            padding: .3rem !important;
+        }
+    </style>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            // Uso de la herramienta: en la etiqueta agregar atributo 
+            // AYUDA y colocar clase "pancho-tooltip"
+            Tipped.create('.pancho-tooltip', function (element) {
+                return {
+                    title: "Ayuda en Pantalla",
+                    content: $(element).attr('ayuda')
+                };
+            }, {
+                skin: 'light',
+            }
+            );
+
+            var htmlDataTable = "<'row'<'col-sm-12 col-md-8'lB><'col-sm-12 col-md-4'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>";
+
+            $('#tablaEjemplo2').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+                },
+                responsive: true,
+                dom: htmlDataTable,
+                buttons: [
+                    'copy', 'excel', 'pdf'
+                ]
+            });
+
+            
+            $('#tablaModal').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+                },
+                responsive: true,
+                dom: htmlDataTable,
+                buttons: [
+                    'copy', 'excel', 'pdf'
+                ],
+                "columnDefs": [
+                    { className: "desktop", "targets": [0] },
+                    { className: "desktop", "targets": [1] },
+                    { className: "desktop", "targets": [2] },
+                    { className: "none", "targets": [3] },
+                    { className: "desktop", "targets": [4] },
+                    { className: "desktop", "targets": [5] },
+                    { className: "none", "targets": [6] },
+                    { className: "desktop", "targets": [7] },
+                    { className: "desktop", "targets": [8] },
+                    { className: "desktop", "targets": [9] },
+                    { className: "none", "targets": [10] },
+                    { className: "none", "targets": [11] },
+                    { className: "desktop", "targets": [12] }
+                ]
+            });
+
+
+
+
+            spoilerAlert('spoiler, .spoiler');
+
+
+            Morris.Line({
+                // ID of the element in which to draw the chart.
+                element: 'myfirstchart',
+                // Chart data records -- each entry in this array corresponds to a point on
+                // the chart.
+                data: [
+                    { anio: '2008', value: 100 },
+                    { anio: '2009', value: 10 },
+                    { anio: '2010', value: 5 },
+                    { anio: '2011', value: 5 },
+                    { anio: '2012', value: 20 }
+                ],
+                // The name of the data record attribute that contains x-values.
+                xkey: 'anio',
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ['value'],
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ['Valores']
+            });
+
+            Morris.Donut({
+                            element: 'myfirstchart2',
+                            data: [
+                                { label: "Ventas del Año", value: 80 },
+                                { label: "Exito de Taquilla", value: 10 },
+                                { label: "Otros Datos", value: 10 }
+                            ]
+                        });
+
+
+            Morris.Bar({
+                element: 'myfirstchart3',
+                data: [
+                    { y: '2006', a: 100, b: 90 , pancho: 100 },
+                    { y: '2007', a: 75, b: 65 , pancho: 100},
+                    { y: '2008', a: 50, b: 40 , pancho: 100},
+                    { y: '2009', a: 75, b: 65 , pancho: 100},
+                    { y: '2010', a: 50, b: 40 , pancho: 100},
+                    { y: '2011', a: 75, b: 65 , pancho: 100},
+                    { y: '2012', a: 100, b: 90, pancho: 100 }
+                ],
+                xkey: 'y',
+                ykeys: ['a', 'b', 'pancho'],
+                labels: ['Series A', 'Series B', 'Francisco']
+            });
+
+
+            $("#btnPrueba").on("click", function () {
+
+
+                $("#exampleModal").modal("show");
+
+            });
+
+            $("#btnCerrarModal").on("click", function () {
+
+                $("#exampleModal").modal("hide");
+
+            });
+
+        });
+
+
+
+    </script>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row mt-5">
+
+            <div class="col">
+                <button type="button" id="btnPrueba" class="btn btn-outline-primary pancho-tooltip"
+                    ayuda="Este es un uso de un Pluging en JQUERY.">Prueba de Botón</button>
+
+
+            </div>
+            <div class="col">
+                <button id="btnPrueba2" class="btn btn-outline-danger pancho-tooltip" ayuda="Sobre el boton ROJO."
+                    data-tipped-options="skin: 'red'">Prueba de Botón Numero 2</button>
+            </div>
+
+
+            <div class="col">
+                <h3 class="pancho-tooltip" ayuda="Ayuda en Pantalla">Esto es otro uso del Tooltip.</h3>
+            </div>
+
+        </div>
+
+        <div class="row mt-3">
+            <div class="col">
+                <table class="table spoiler">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th class="pancho-tooltip"
+                                ayuda="Ayuda en Pantalla: <b>Ojo</b> este es el nombre del usuario.<br> Se debe agregar nombre completo.">
+                                Usuario</th>
+                            <th>Apellido</th>
+                            <th class="pancho-tooltip"
+                                ayuda="Ayuda en Pantalla: Ojo que esto es el nombre del Cliente. Se debe agregar completo.">
+                                Cliente</th>
+                            <th>Apellido</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="row">1</td>
+                            <td>Francisco</td>
+                            <td>Boisier</td>
+                            <td>Francisco</td>
+                            <td>Boisier</td>
+                            <td>Francisco</td>
+                            <td>Boisier</td>
+                            <td>Francisco</td>
+                            <td>Boisier</td>
+                            <td>Francisco</td>
+                            <td>Boisier</td>
+                            <td>Francisco</td>
+                            <td>Boisier</td>
+                        </tr>
+                        <tr>
+                            <td scope="row">2</td>
+                            <td>Javier</td>
+                            <td>Sandoval</td>
+                            <td>Javier</td>
+                            <td>Sandoval</td>
+                            <td>Javier</td>
+                            <td>Sandoval</td>
+                            <td>Javier</td>
+                            <td>Sandoval</td>
+                            <td>Javier</td>
+                            <td>Sandoval</td>
+                            <td>Javier</td>
+                            <td>Sandoval</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col">
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. <span class="pancho-tooltip"
+                        ayuda="Cuando decimos error es al error del sistema, no tuyo."><b>Error</b></span> quos
+                    reprehenderit
+                    <span class="spoiler">el final muerde todos!</span> eveniet beatae inventore commodi, eligendi totam
+                    sapiente minima, voluptatum unde earum
+                    minus a
+                    possimus.
+                </p>
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col">
+                <div id="myfirstchart" style="height: 250px;"></div>
+            </div>
+            <div class="col">
+                <div id="myfirstchart2" style="height: 250px;"></div>
+            </div>
+            <div class="col">
+                <div id="myfirstchart3" style="height: 250px;"></div>
+            </div>
+        </div>
+
+
+
+
+        <div class="row mt-5 mb-5">
+
+            <div class="col">
+                <h1>Tabla de Ejemplo para Ordenar</h1>
+                <table id="tablaEjemplo2"
+                    class="table table-sm table-striped table-hover table-bordered border-primary ">
+                    <thead>
+                        <tr>
+                            <th data-priority="1">id</th>
+                            <th>nombre</th>
+                            <th>rut</th>
+                            <th>telefono</th>
+                            <th>direccion</th>
+                            <th>correo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Colorado</td>
+                            <td>33060386-0</td>
+                            <td>(164) 891-1294</td>
+                            <td>P.O. Box 792, 2106 Sit Street</td>
+                            <td>enim.Nunc@parturient.org</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Wade</td>
+                            <td>21761180-6</td>
+                            <td>(830) 564-1523</td>
+                            <td>6333 Interdum Av.</td>
+                            <td>tincidunt.Donec@musProin.ca</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Ralph</td>
+                            <td>9268617-5</td>
+                            <td>(375) 283-9596</td>
+                            <td>Ap #712-2487 Est. Avenue</td>
+                            <td>feugiat.Sed@laciniamattis.org</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Jelani</td>
+                            <td>35867449-6</td>
+                            <td>(263) 330-7251</td>
+                            <td>Ap #755-2560 Dolor. Ave</td>
+                            <td>non.enim.Mauris@ametrisus.ca</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Travis</td>
+                            <td>25158693-4</td>
+                            <td>(996) 176-9663</td>
+                            <td>Ap #740-3731 Lorem St.</td>
+                            <td>elit.erat.vitae@leoelementum.net</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Lars</td>
+                            <td>47785822-8</td>
+                            <td>(222) 648-8869</td>
+                            <td>7589 Commodo St.</td>
+                            <td>Duis.at@semper.com</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Cullen</td>
+                            <td>44085110-K</td>
+                            <td>(337) 233-6032</td>
+                            <td>Ap #162-230 Donec Av.</td>
+                            <td>In.nec@diameudolor.net</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>Gavin</td>
+                            <td>22677614-1</td>
+                            <td>(991) 354-8247</td>
+                            <td>P.O. Box 744, 2394 In, Rd.</td>
+                            <td>in.tempus.eu@acurna.edu</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>Lev</td>
+                            <td>10944580-0</td>
+                            <td>(397) 867-6762</td>
+                            <td>427-1328 Duis Rd.</td>
+                            <td>ultricies.ornare.elit@velit.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>Gil</td>
+                            <td>45983085-5</td>
+                            <td>(398) 586-1299</td>
+                            <td>P.O. Box 822, 507 Ac Rd.</td>
+                            <td>lacus.Etiam.bibendum@mattisCraseget.ca</td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>Callum</td>
+                            <td>33328325-5</td>
+                            <td>(934) 921-4608</td>
+                            <td>998-3734 Vestibulum Avenue</td>
+                            <td>ut@Donecfringilla.net</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>Kevin</td>
+                            <td>25935205-3</td>
+                            <td>(448) 736-5663</td>
+                            <td>P.O. Box 833, 8392 Tempor Rd.</td>
+                            <td>Pellentesque.habitant.morbi@Nulla.net</td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td>Donovan</td>
+                            <td>41877270-0</td>
+                            <td>(604) 488-5708</td>
+                            <td>Ap #312-2791 Lorem Av.</td>
+                            <td>nunc.sed.pede@hendrerit.net</td>
+                        </tr>
+                        <tr>
+                            <td>14</td>
+                            <td>Ferdinand</td>
+                            <td>7318362-6</td>
+                            <td>(185) 672-3042</td>
+                            <td>P.O. Box 388, 5797 Malesuada Rd.</td>
+                            <td>Phasellus@montesnascetur.ca</td>
+                        </tr>
+                        <tr>
+                            <td>15</td>
+                            <td>Christian</td>
+                            <td>16293113-K</td>
+                            <td>(149) 246-1951</td>
+                            <td>P.O. Box 218, 2731 Risus. Road</td>
+                            <td>Vivamus@Proin.org</td>
+                        </tr>
+                        <tr>
+                            <td>16</td>
+                            <td>Macaulay</td>
+                            <td>19606774-4</td>
+                            <td>(819) 765-5216</td>
+                            <td>Ap #643-5609 Molestie St.</td>
+                            <td>vel@eunibh.net</td>
+                        </tr>
+                        <tr>
+                            <td>17</td>
+                            <td>Kyle</td>
+                            <td>28150665-K</td>
+                            <td>(263) 683-6955</td>
+                            <td>667-7027 Orci. St.</td>
+                            <td>consequat.nec.mollis@idmagnaet.ca</td>
+                        </tr>
+                        <tr>
+                            <td>18</td>
+                            <td>Linus</td>
+                            <td>37446492-2</td>
+                            <td>(817) 608-6963</td>
+                            <td>688-3151 Quam Rd.</td>
+                            <td>torquent@nuncsitamet.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>19</td>
+                            <td>Xenos</td>
+                            <td>38486871-1</td>
+                            <td>(987) 301-0720</td>
+                            <td>4381 Nunc Avenue</td>
+                            <td>Mauris@felisDonectempor.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>20</td>
+                            <td>Harlan</td>
+                            <td>45935185-K</td>
+                            <td>(152) 192-9880</td>
+                            <td>Ap #577-7373 Ut Rd.</td>
+                            <td>libero.at@lacus.net</td>
+                        </tr>
+                        <tr>
+                            <td>21</td>
+                            <td>Raphael</td>
+                            <td>12032584-1</td>
+                            <td>(935) 528-6952</td>
+                            <td>Ap #491-7426 Ac Rd.</td>
+                            <td>nisi.Cum@congue.edu</td>
+                        </tr>
+                        <tr>
+                            <td>22</td>
+                            <td>Alvin</td>
+                            <td>24985080-2</td>
+                            <td>(682) 879-0167</td>
+                            <td>579-7114 Tincidunt Road</td>
+                            <td>Aenean.gravida@dictumcursus.edu</td>
+                        </tr>
+                        <tr>
+                            <td>23</td>
+                            <td>Isaac</td>
+                            <td>44147573-K</td>
+                            <td>(869) 535-4641</td>
+                            <td>P.O. Box 516, 9916 Arcu. Rd.</td>
+                            <td>dolor.Fusce@semper.ca</td>
+                        </tr>
+                        <tr>
+                            <td>24</td>
+                            <td>Marsden</td>
+                            <td>38265688-1</td>
+                            <td>(829) 104-0423</td>
+                            <td>6299 Interdum St.</td>
+                            <td>vel@semper.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>25</td>
+                            <td>Cairo</td>
+                            <td>34205892-2</td>
+                            <td>(939) 648-5213</td>
+                            <td>P.O. Box 839, 2361 Duis Street</td>
+                            <td>aliquet.nec@eleifendCras.org</td>
+                        </tr>
+                        <tr>
+                            <td>26</td>
+                            <td>Gabriel</td>
+                            <td>41871802-1</td>
+                            <td>(748) 193-9816</td>
+                            <td>P.O. Box 676, 5691 Aenean Ave</td>
+                            <td>sollicitudin.commodo.ipsum@utpellentesqueeget.ca</td>
+                        </tr>
+                        <tr>
+                            <td>27</td>
+                            <td>Dane</td>
+                            <td>41811112-7</td>
+                            <td>(787) 884-4007</td>
+                            <td>P.O. Box 373, 6153 Orci. St.</td>
+                            <td>imperdiet.ornare@tortor.net</td>
+                        </tr>
+                        <tr>
+                            <td>28</td>
+                            <td>Lyle</td>
+                            <td>48419393-2</td>
+                            <td>(654) 242-4226</td>
+                            <td>695-7054 Nam Av.</td>
+                            <td>lectus.convallis@NulladignissimMaecenas.ca</td>
+                        </tr>
+                        <tr>
+                            <td>29</td>
+                            <td>Judah</td>
+                            <td>42700407-4</td>
+                            <td>(277) 344-2662</td>
+                            <td>P.O. Box 478, 7278 Ornare. Ave</td>
+                            <td>Donec@aliquet.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>30</td>
+                            <td>Rafael</td>
+                            <td>18465353-2</td>
+                            <td>(837) 324-0455</td>
+                            <td>1952 Ipsum. St.</td>
+                            <td>urna.nec.luctus@nunc.org</td>
+                        </tr>
+                        <tr>
+                            <td>31</td>
+                            <td>Clinton</td>
+                            <td>17452158-1</td>
+                            <td>(777) 702-1646</td>
+                            <td>P.O. Box 922, 227 Sodales Rd.</td>
+                            <td>malesuada.vel@ridiculus.ca</td>
+                        </tr>
+                        <tr>
+                            <td>32</td>
+                            <td>Rashad</td>
+                            <td>26080748-K</td>
+                            <td>(117) 513-1880</td>
+                            <td>2964 Nibh Avenue</td>
+                            <td>a@magna.net</td>
+                        </tr>
+                        <tr>
+                            <td>33</td>
+                            <td>Marshall</td>
+                            <td>11154947-8</td>
+                            <td>(827) 732-5062</td>
+                            <td>Ap #988-9929 Et, St.</td>
+                            <td>adipiscing.fringilla@Proinnon.edu</td>
+                        </tr>
+                        <tr>
+                            <td>34</td>
+                            <td>Ali</td>
+                            <td>32929345-9</td>
+                            <td>(831) 157-0558</td>
+                            <td>Ap #800-3609 Morbi Rd.</td>
+                            <td>sit.amet.massa@nisi.com</td>
+                        </tr>
+                        <tr>
+                            <td>35</td>
+                            <td>Burton</td>
+                            <td>26825297-5</td>
+                            <td>(209) 903-7648</td>
+                            <td>Ap #143-1399 Lorem, Rd.</td>
+                            <td>enim.commodo@Nunccommodo.ca</td>
+                        </tr>
+                        <tr>
+                            <td>36</td>
+                            <td>Quinn</td>
+                            <td>39774541-4</td>
+                            <td>(366) 727-4277</td>
+                            <td>6784 Bibendum Rd.</td>
+                            <td>magna.Cras.convallis@adipiscingfringilla.com</td>
+                        </tr>
+                        <tr>
+                            <td>37</td>
+                            <td>Damian</td>
+                            <td>10496705-1</td>
+                            <td>(508) 668-0257</td>
+                            <td>710-5700 Et Rd.</td>
+                            <td>eu@sem.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>38</td>
+                            <td>Lester</td>
+                            <td>6733220-2</td>
+                            <td>(414) 245-1836</td>
+                            <td>690-4111 Sem St.</td>
+                            <td>cursus.luctus.ipsum@Donecsollicitudin.ca</td>
+                        </tr>
+                        <tr>
+                            <td>39</td>
+                            <td>Rashad</td>
+                            <td>31158446-4</td>
+                            <td>(180) 732-9801</td>
+                            <td>Ap #822-3058 Adipiscing Ave</td>
+                            <td>ipsum.Suspendisse@non.com</td>
+                        </tr>
+                        <tr>
+                            <td>40</td>
+                            <td>Kenyon</td>
+                            <td>22121585-0</td>
+                            <td>(188) 766-9610</td>
+                            <td>8943 Metus. Road</td>
+                            <td>eu.tellus.Phasellus@liberoat.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>41</td>
+                            <td>Herman</td>
+                            <td>34802910-K</td>
+                            <td>(231) 420-6254</td>
+                            <td>P.O. Box 521, 9452 Sed Street</td>
+                            <td>laoreet@lacinia.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>42</td>
+                            <td>Barrett</td>
+                            <td>18150357-2</td>
+                            <td>(864) 143-0697</td>
+                            <td>Ap #608-9997 Mauris Rd.</td>
+                            <td>quis@quislectusNullam.org</td>
+                        </tr>
+                        <tr>
+                            <td>43</td>
+                            <td>Barry</td>
+                            <td>20477137-5</td>
+                            <td>(305) 218-4870</td>
+                            <td>156-4314 Quam St.</td>
+                            <td>eget@felisullamcorperviverra.edu</td>
+                        </tr>
+                        <tr>
+                            <td>44</td>
+                            <td>Plato</td>
+                            <td>49853337-K</td>
+                            <td>(246) 256-3571</td>
+                            <td>5687 Quam Rd.</td>
+                            <td>sed.dolor@nequeSed.edu</td>
+                        </tr>
+                        <tr>
+                            <td>45</td>
+                            <td>Dexter</td>
+                            <td>20199038-6</td>
+                            <td>(652) 898-1595</td>
+                            <td>8369 Donec Road</td>
+                            <td>vitae.velit@necorciDonec.edu</td>
+                        </tr>
+                        <tr>
+                            <td>46</td>
+                            <td>Basil</td>
+                            <td>13521523-6</td>
+                            <td>(602) 177-7660</td>
+                            <td>378-981 Eget, Av.</td>
+                            <td>lacus.vestibulum@litoratorquentper.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>47</td>
+                            <td>Reuben</td>
+                            <td>19685662-5</td>
+                            <td>(605) 153-2432</td>
+                            <td>P.O. Box 975, 1804 Arcu. Rd.</td>
+                            <td>felis.purus@loremegetmollis.edu</td>
+                        </tr>
+                        <tr>
+                            <td>48</td>
+                            <td>Bevis</td>
+                            <td>35485807-K</td>
+                            <td>(143) 749-0755</td>
+                            <td>6530 Lacus. Rd.</td>
+                            <td>odio@nisiCum.org</td>
+                        </tr>
+                        <tr>
+                            <td>49</td>
+                            <td>Stephen</td>
+                            <td>20617815-9</td>
+                            <td>(460) 358-6036</td>
+                            <td>P.O. Box 364, 1272 Non Street</td>
+                            <td>dapibus.quam.quis@nasceturridiculus.org</td>
+                        </tr>
+                        <tr>
+                            <td>50</td>
+                            <td>Jin</td>
+                            <td>42809295-3</td>
+                            <td>(913) 691-9883</td>
+                            <td>Ap #869-9087 Vivamus St.</td>
+                            <td>non.leo@dui.org</td>
+                        </tr>
+                        <tr>
+                            <td>51</td>
+                            <td>Talon</td>
+                            <td>46631210-K</td>
+                            <td>(975) 283-3747</td>
+                            <td>Ap #837-9791 Ac Road</td>
+                            <td>tincidunt@eudui.com</td>
+                        </tr>
+                        <tr>
+                            <td>52</td>
+                            <td>Linus</td>
+                            <td>29773132-7</td>
+                            <td>(649) 719-9168</td>
+                            <td>P.O. Box 847, 6780 At, Ave</td>
+                            <td>turpis@uteratSed.org</td>
+                        </tr>
+                        <tr>
+                            <td>53</td>
+                            <td>Henry</td>
+                            <td>30639868-7</td>
+                            <td>(638) 155-7632</td>
+                            <td>P.O. Box 513, 4924 Nulla Rd.</td>
+                            <td>Suspendisse@augueporttitorinterdum.ca</td>
+                        </tr>
+                        <tr>
+                            <td>54</td>
+                            <td>Logan</td>
+                            <td>9162784-1</td>
+                            <td>(257) 973-1595</td>
+                            <td>P.O. Box 277, 8393 Felis. Rd.</td>
+                            <td>mauris.a.nunc@semsempererat.org</td>
+                        </tr>
+                        <tr>
+                            <td>55</td>
+                            <td>Ethan</td>
+                            <td>11734157-7</td>
+                            <td>(524) 200-9448</td>
+                            <td>Ap #482-150 Nulla St.</td>
+                            <td>auctor.non@facilisismagna.edu</td>
+                        </tr>
+                        <tr>
+                            <td>56</td>
+                            <td>Samson</td>
+                            <td>16484611-3</td>
+                            <td>(551) 240-9008</td>
+                            <td>390-6338 Tortor St.</td>
+                            <td>quis@Nam.org</td>
+                        </tr>
+                        <tr>
+                            <td>57</td>
+                            <td>Raphael</td>
+                            <td>45067459-1</td>
+                            <td>(935) 118-3762</td>
+                            <td>5564 Sagittis. St.</td>
+                            <td>mollis@eu.edu</td>
+                        </tr>
+                        <tr>
+                            <td>58</td>
+                            <td>Hoyt</td>
+                            <td>7218348-7</td>
+                            <td>(531) 991-8304</td>
+                            <td>P.O. Box 970, 1203 Et, St.</td>
+                            <td>risus@inconsectetueripsum.ca</td>
+                        </tr>
+                        <tr>
+                            <td>59</td>
+                            <td>Barclay</td>
+                            <td>13698130-7</td>
+                            <td>(700) 413-5040</td>
+                            <td>P.O. Box 385, 2261 Maecenas Avenue</td>
+                            <td>vehicula.et.rutrum@mifelisadipiscing.edu</td>
+                        </tr>
+                        <tr>
+                            <td>60</td>
+                            <td>Isaac</td>
+                            <td>26543453-3</td>
+                            <td>(491) 601-8074</td>
+                            <td>125-6364 Sed Avenue</td>
+                            <td>a.dui@Fuscediamnunc.org</td>
+                        </tr>
+                        <tr>
+                            <td>61</td>
+                            <td>Elliott</td>
+                            <td>38987953-3</td>
+                            <td>(807) 752-3746</td>
+                            <td>Ap #792-846 Eget St.</td>
+                            <td>est.Mauris@pharetrafeliseget.edu</td>
+                        </tr>
+                        <tr>
+                            <td>62</td>
+                            <td>Ciaran</td>
+                            <td>7722667-2</td>
+                            <td>(555) 677-2129</td>
+                            <td>P.O. Box 787, 1684 Felis St.</td>
+                            <td>enim@adipiscinglobortisrisus.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>63</td>
+                            <td>Beck</td>
+                            <td>6343041-2</td>
+                            <td>(560) 395-2481</td>
+                            <td>P.O. Box 866, 9635 Tempus Avenue</td>
+                            <td>tempor.augue@Nunc.ca</td>
+                        </tr>
+                        <tr>
+                            <td>64</td>
+                            <td>Ralph</td>
+                            <td>31388506-2</td>
+                            <td>(114) 374-2323</td>
+                            <td>Ap #127-807 Aenean Rd.</td>
+                            <td>non.lacinia.at@a.org</td>
+                        </tr>
+                        <tr>
+                            <td>65</td>
+                            <td>Kelly</td>
+                            <td>19657955-9</td>
+                            <td>(624) 672-0888</td>
+                            <td>263-5191 Lorem. St.</td>
+                            <td>volutpat.Nulla@Fuscefermentumfermentum.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>66</td>
+                            <td>Marvin</td>
+                            <td>23741727-5</td>
+                            <td>(749) 480-0786</td>
+                            <td>Ap #118-4726 Volutpat Avenue</td>
+                            <td>arcu@leoVivamusnibh.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>67</td>
+                            <td>Solomon</td>
+                            <td>50137687-6</td>
+                            <td>(600) 804-4902</td>
+                            <td>P.O. Box 894, 6261 Cras Street</td>
+                            <td>litora@felis.ca</td>
+                        </tr>
+                        <tr>
+                            <td>68</td>
+                            <td>Fulton</td>
+                            <td>39254549-2</td>
+                            <td>(160) 950-4645</td>
+                            <td>P.O. Box 172, 8662 Eget Av.</td>
+                            <td>arcu.et@Nulla.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>69</td>
+                            <td>Louis</td>
+                            <td>18293521-2</td>
+                            <td>(139) 128-1556</td>
+                            <td>5709 Elementum St.</td>
+                            <td>tellus@ipsumSuspendisse.ca</td>
+                        </tr>
+                        <tr>
+                            <td>70</td>
+                            <td>Keefe</td>
+                            <td>45359729-6</td>
+                            <td>(386) 789-8676</td>
+                            <td>Ap #480-5863 Ac Road</td>
+                            <td>scelerisque@et.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>71</td>
+                            <td>Gil</td>
+                            <td>10972587-0</td>
+                            <td>(447) 237-3021</td>
+                            <td>Ap #948-7572 Sem Street</td>
+                            <td>eget.mollis.lectus@bibendumfermentummetus.com</td>
+                        </tr>
+                        <tr>
+                            <td>72</td>
+                            <td>Seth</td>
+                            <td>37506500-2</td>
+                            <td>(127) 274-9374</td>
+                            <td>3009 Sem St.</td>
+                            <td>pede@aliquetPhasellus.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>73</td>
+                            <td>Branden</td>
+                            <td>37095703-7</td>
+                            <td>(521) 379-1908</td>
+                            <td>Ap #220-355 Arcu. Av.</td>
+                            <td>tempor.diam@nislarcu.ca</td>
+                        </tr>
+                        <tr>
+                            <td>74</td>
+                            <td>Beck</td>
+                            <td>34872883-0</td>
+                            <td>(241) 594-2379</td>
+                            <td>555 Pharetra. Avenue</td>
+                            <td>enim.Nunc.ut@uteratSed.org</td>
+                        </tr>
+                        <tr>
+                            <td>75</td>
+                            <td>Orlando</td>
+                            <td>12590902-7</td>
+                            <td>(833) 999-7938</td>
+                            <td>P.O. Box 165, 5976 At St.</td>
+                            <td>Nulla@penatibus.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>76</td>
+                            <td>Bevis</td>
+                            <td>27680636-K</td>
+                            <td>(244) 754-1289</td>
+                            <td>7658 Est. Ave</td>
+                            <td>commodo@malesuadamalesuada.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>77</td>
+                            <td>Mohammad</td>
+                            <td>32311788-8</td>
+                            <td>(964) 519-4792</td>
+                            <td>Ap #389-8433 Pede St.</td>
+                            <td>suscipit@adipiscingMaurismolestie.com</td>
+                        </tr>
+                        <tr>
+                            <td>78</td>
+                            <td>Samuel</td>
+                            <td>30556113-4</td>
+                            <td>(594) 221-7550</td>
+                            <td>209-4790 Ut Rd.</td>
+                            <td>gravida@tincidunt.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>79</td>
+                            <td>Yardley</td>
+                            <td>24489133-0</td>
+                            <td>(286) 939-6063</td>
+                            <td>Ap #727-9246 Risus. St.</td>
+                            <td>nibh.vulputate@dictum.com</td>
+                        </tr>
+                        <tr>
+                            <td>80</td>
+                            <td>Xander</td>
+                            <td>50496234-2</td>
+                            <td>(424) 144-9458</td>
+                            <td>Ap #356-1966 In Rd.</td>
+                            <td>Sed.nulla.ante@dolorelit.org</td>
+                        </tr>
+                        <tr>
+                            <td>81</td>
+                            <td>Burke</td>
+                            <td>45200766-5</td>
+                            <td>(749) 911-0812</td>
+                            <td>P.O. Box 540, 434 Augue Rd.</td>
+                            <td>Integer@Proin.ca</td>
+                        </tr>
+                        <tr>
+                            <td>82</td>
+                            <td>Colt</td>
+                            <td>50388326-0</td>
+                            <td>(438) 322-5030</td>
+                            <td>883-4387 Tellus Rd.</td>
+                            <td>dapibus.quam.quis@elementumat.org</td>
+                        </tr>
+                        <tr>
+                            <td>83</td>
+                            <td>Drake</td>
+                            <td>10578126-1</td>
+                            <td>(549) 350-9973</td>
+                            <td>Ap #753-3389 Libero. St.</td>
+                            <td>volutpat.nunc@liberoduinec.net</td>
+                        </tr>
+                        <tr>
+                            <td>84</td>
+                            <td>Curran</td>
+                            <td>11379339-2</td>
+                            <td>(940) 955-6260</td>
+                            <td>7648 Placerat. Ave</td>
+                            <td>Suspendisse@Mauris.edu</td>
+                        </tr>
+                        <tr>
+                            <td>85</td>
+                            <td>Jameson</td>
+                            <td>48138890-2</td>
+                            <td>(165) 968-8676</td>
+                            <td>Ap #247-8329 Massa. Rd.</td>
+                            <td>a.facilisis.non@NullainterdumCurabitur.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>86</td>
+                            <td>Wylie</td>
+                            <td>9483102-4</td>
+                            <td>(848) 445-9589</td>
+                            <td>P.O. Box 471, 4156 Ligula Ave</td>
+                            <td>auctor.Mauris@mauris.net</td>
+                        </tr>
+                        <tr>
+                            <td>87</td>
+                            <td>Alvin</td>
+                            <td>35255515-0</td>
+                            <td>(418) 411-4046</td>
+                            <td>Ap #903-8573 Non, St.</td>
+                            <td>lectus.Cum.sociis@egetlacus.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>88</td>
+                            <td>Otto</td>
+                            <td>50453051-5</td>
+                            <td>(424) 532-7186</td>
+                            <td>2734 Eleifend St.</td>
+                            <td>enim.sit@velvulputate.org</td>
+                        </tr>
+                        <tr>
+                            <td>89</td>
+                            <td>Darius</td>
+                            <td>30087070-8</td>
+                            <td>(622) 396-7547</td>
+                            <td>P.O. Box 958, 9711 Mauris Street</td>
+                            <td>Cras.vulputate.velit@eunullaat.ca</td>
+                        </tr>
+                        <tr>
+                            <td>90</td>
+                            <td>Ahmed</td>
+                            <td>6412959-7</td>
+                            <td>(791) 577-1884</td>
+                            <td>P.O. Box 630, 2383 Sem Rd.</td>
+                            <td>quam.Pellentesque.habitant@faucibus.co.uk</td>
+                        </tr>
+                        <tr>
+                            <td>91</td>
+                            <td>Armand</td>
+                            <td>32309747-K</td>
+                            <td>(462) 428-7236</td>
+                            <td>1883 Ornare. Rd.</td>
+                            <td>ac.tellus.Suspendisse@duiquis.org</td>
+                        </tr>
+                        <tr>
+                            <td>92</td>
+                            <td>Kermit</td>
+                            <td>22042785-4</td>
+                            <td>(379) 545-5311</td>
+                            <td>5136 Molestie Road</td>
+                            <td>lacus@pellentesquea.com</td>
+                        </tr>
+                        <tr>
+                            <td>93</td>
+                            <td>Macaulay</td>
+                            <td>35709234-5</td>
+                            <td>(519) 871-9149</td>
+                            <td>Ap #791-9228 Pede. Road</td>
+                            <td>turpis.nec.mauris@dolortempusnon.org</td>
+                        </tr>
+                        <tr>
+                            <td>94</td>
+                            <td>Drake</td>
+                            <td>44139627-9</td>
+                            <td>(169) 406-1235</td>
+                            <td>4934 Eros. Ave</td>
+                            <td>eu@orcilobortis.ca</td>
+                        </tr>
+                        <tr>
+                            <td>95</td>
+                            <td>Coby</td>
+                            <td>34642039-1</td>
+                            <td>(582) 287-3524</td>
+                            <td>908-1957 Fermentum Street</td>
+                            <td>scelerisque.neque.sed@eleifend.edu</td>
+                        </tr>
+                        <tr>
+                            <td>96</td>
+                            <td>Ali</td>
+                            <td>32874503-8</td>
+                            <td>(452) 432-8045</td>
+                            <td>9367 Gravida Avenue</td>
+                            <td>adipiscing.ligula@blandit.net</td>
+                        </tr>
+                        <tr>
+                            <td>97</td>
+                            <td>Kieran</td>
+                            <td>48418064-4</td>
+                            <td>(723) 839-8533</td>
+                            <td>625-5235 Mollis Ave</td>
+                            <td>sit.amet@aliquam.com</td>
+                        </tr>
+                        <tr>
+                            <td>98</td>
+                            <td>Hayden</td>
+                            <td>6550180-5</td>
+                            <td>(600) 499-9174</td>
+                            <td>479-3632 Mi. Rd.</td>
+                            <td>In@temporarcu.edu</td>
+                        </tr>
+                        <tr>
+                            <td>99</td>
+                            <td>Craig</td>
+                            <td>8896194-3</td>
+                            <td>(192) 806-5211</td>
+                            <td>Ap #562-9240 Ullamcorper. Avenue</td>
+                            <td>non.dapibus.rutrum@velitSed.com</td>
+                        </tr>
+                        <tr>
+                            <td>100</td>
+                            <td>Adrian</td>
+                            <td>10467937-4</td>
+                            <td>(889) 855-7016</td>
+                            <td>Ap #226-8689 Nibh. Av.</td>
+                            <td>Curabitur@mi.edu</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table id="tablaModal" class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th class="pancho-tooltip"
+                                    ayuda="Ayuda en Pantalla: <b>Ojo</b> este es el nombre del usuario.<br> Se debe agregar nombre completo.">
+                                    Usuario</th>
+                                <th>Apellido</th>
+                                <th class="pancho-tooltip"
+                                    ayuda="Ayuda en Pantalla: Ojo que esto es el nombre del Cliente. Se debe agregar completo.">
+                                    Cliente</th>
+                                <th>Apellido</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td scope="row">1</td>
+                                <td>Francisco</td>
+                                <td>Boisier</td>
+                                <td>Francisco</td>
+                                <td>Boisier</td>
+                                <td>Francisco</td>
+                                <td>Boisier</td>
+                                <td>Francisco</td>
+                                <td>Boisier</td>
+                                <td>Francisco</td>
+                                <td>Boisier</td>
+                                <td>Francisco</td>
+                                <td>Boisier</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">2</td>
+                                <td>Javier</td>
+                                <td>Sandoval</td>
+                                <td>Javier</td>
+                                <td>Sandoval</td>
+                                <td>Javier</td>
+                                <td>Sandoval</td>
+                                <td>Javier</td>
+                                <td>Sandoval</td>
+                                <td>Javier</td>
+                                <td>Sandoval</td>
+                                <td>Javier</td>
+                                <td>Sandoval</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btnCerrarModal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
